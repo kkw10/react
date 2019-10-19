@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, memo} from 'react';
 import { MdAdd } from 'react-icons/md';
 import './TodoInsert.scss';
 
@@ -30,4 +30,4 @@ const TodoInsert = ({ onInsert }) => {
   )
 }
 
-export default TodoInsert;
+export default memo(TodoInsert);
