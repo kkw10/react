@@ -11,10 +11,11 @@ function App() {
 
   const onChange = useCallback((e) => {
     const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: [value]
-    })
+    setForm(
+      produce(draft => {
+        draft[name] = value
+      })
+    )
   }, [form])
 
   const onSubmit = useCallback((e) => {
@@ -25,10 +26,11 @@ function App() {
       username: form.username
     };
 
-    setData({
-      ...data,
-      array: data.array.concat(info)
-    });
+    setData(
+      produce(draft => {
+        draft.array.push(info);
+      })
+    );
 
     setForm({
       name: '',
@@ -39,10 +41,11 @@ function App() {
   }, [data, form.name, form.username]);
 
   const onRemove = useCallback((id) => {
-    setData({
-      ...data,
-      array: data.array.filter((info) => info.id !== id)
-    })
+    setData(
+      produce(draft => { // 이 경우는 기존 filter 코드가 더 깔끔하므로 filter를 사용한다.
+        draft.array.splice(draft.array.findIndex(info => info.id === id), 1)
+      })
+    )
   }, [data])
 
   return (
